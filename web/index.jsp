@@ -16,9 +16,9 @@
       <button class="btn-start" onclick=""></button>
       <button class="btn-pause" onclick=""></button>
       <button class="btn-stop" onclick=""></button>
-      <button class="btn" onclick="">Square</button>
-      <button class="btn" onclick="">Circle</button>
-      <button class="btn" onclick="">Arrow</button>
+      <button class="btn-square" onclick=""></button>
+      <button class="btn-circle" onclick=""></button>
+      <button class="btn-arrow" onclick=""></button>
     </div>
 
     <div class="board-container">

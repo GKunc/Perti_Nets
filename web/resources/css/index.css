@@ -51,6 +51,32 @@ body {
     border-radius: 100%;
 }
 
+.btn-square {
+    margin-top: 20px;
+    background-image: url("../images/square.png");
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 100%;
+    padding: 10px;
+}
+
+.btn-circle {
+    margin-top: 20px;
+    background-image: url("../images/circle.png");
+    background-size: cover;
+    border-radius: 100%;
+}
+
+.btn-arrow {
+    margin-top: 20px;
+    background-image: url("../images/arrow.png");
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 100%;
+}
+
 .button-container button:hover {
     filter: brightness(1.25);
     cursor: pointer;
