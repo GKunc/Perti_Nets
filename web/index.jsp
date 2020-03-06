@@ -8,9 +8,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$Title$</title>
-  </head>
+    <title>Perti Nets Creator</title>
+    <link href="./resources/css/index.css" rel="stylesheet" type="text/css">  </head>
   <body>
-  $END$
+
+    <div class="button-container">
+      <button class="btn-start" onclick=""></button>
+      <button class="btn-pause" onclick=""></button>
+      <button class="btn-stop" onclick=""></button>
+      <button class="btn" onclick="">Square</button>
+      <button class="btn" onclick="">Circle</button>
+      <button class="btn" onclick="">Arrow</button>
+    </div>
+
+    <div class="board-container">
+      <textarea id="w3mission">
+      </textarea>
+    </div>
   </body>
 </html>
