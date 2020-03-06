@@ -22,7 +22,6 @@
     </div>
 
     <div class="board-container">
-      <textarea id="w3mission">
       </textarea>
     </div>
   </body>
