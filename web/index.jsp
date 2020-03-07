@@ -11,7 +11,11 @@
 <html>
   <head>
     <title>Perti Nets Creator</title>
-    <link href="./resources/css/index.css" rel="stylesheet" type="text/css">  </head>
+    <link href="./resources/css/index.css" rel="stylesheet" type="text/css">
+    <link href="./resources/css/buttons.css" rel="stylesheet" type="text/css">
+    <link href="./resources/css/shapes.css" rel="stylesheet" type="text/css">
+  </head>
+
   <body>
 
     <div class="button-container">
@@ -27,7 +31,9 @@
 
     <div class="board-container" name="board">
       <c:forEach items="${net}" var="item">
-        <span class="${item.class_name}">${item.class_name}</span>
+        <div class="shape">
+          <img src="resources/images/${item.class_name}.png" class="${item.class_name}">
+        </div>
       </c:forEach>
     </div>
   </body>
