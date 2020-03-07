@@ -43,6 +43,8 @@ public class Circle implements IShapes {
 
     public Circle() {
         this.class_name = "circle";
+        this.width = 60;
+        this.height = 60;
     }
     @Override
     public String draw() {

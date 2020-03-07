@@ -32,7 +32,9 @@
     <div class="board-container" name="board">
       <c:forEach items="${net}" var="item">
         <div class="shape">
-          <img src="resources/images/${item.class_name}.png" class="${item.class_name}">
+          <img src="resources/images/${item.class_name}.png"
+               class="${item.class_name}"
+               style="width: ${item.width}; height: ${item.height};">
         </div>
       </c:forEach>
     </div>

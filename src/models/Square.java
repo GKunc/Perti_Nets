@@ -43,6 +43,8 @@ public class Square implements IShapes {
 
     public Square() {
         this.class_name = "square";
+        this.width = 100;
+        this.height = 60;
     }
     @Override
     public String draw() {
