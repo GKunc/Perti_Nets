@@ -27,7 +27,7 @@
 
     <div class="board-container" name="board">
       <c:forEach items="${net}" var="item">
-        <h2>item</h2>
+        <span>{item}</span>
       </c:forEach>
     </div>
   </body>

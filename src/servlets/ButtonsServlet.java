@@ -42,7 +42,7 @@ public class ButtonsServlet extends HttpServlet {
             System.out.println("Square");
 
         } else if (button.equals("circle")) {
-            this.net.add("square");
+            this.net.add("circle");
             System.out.println("Circle");
 
         } else if (button.equals("arrow")) {
