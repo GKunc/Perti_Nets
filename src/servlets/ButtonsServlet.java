@@ -1,9 +1,11 @@
 package servlets;
 
+import interfaces.IShapes;
+import models.Arrow;
+import models.Circle;
+import models.Square;
 import org.jsoup.Jsoup;
-import org.jsoup.helper.HttpConnection;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @WebServlet(name = "buttons", urlPatterns = "/buttons")
 public class ButtonsServlet extends HttpServlet {
-    public List<String> net = new LinkedList<>();
+    public List<IShapes> net_obejcts = new LinkedList<>();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String button = request.getParameter("button");
@@ -38,18 +39,16 @@ public class ButtonsServlet extends HttpServlet {
             System.out.println("Stop");
 
         } else if (button.equals("square")) {
-            this.net.add("square");
-            System.out.println("Square");
+            this.net_obejcts.add(new Square());
 
         } else if (button.equals("circle")) {
-            this.net.add("circle");
-            System.out.println("Circle");
+            this.net_obejcts.add(new Circle());
 
         } else if (button.equals("arrow")) {
-            this.net.add("arrow");
-            System.out.println("Arrow");
+            this.net_obejcts.add(new Arrow());
         }
-        request.setAttribute("net", this.net);
+
+        request.setAttribute("net", this.net_obejcts);
         RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
         dispatcher.forward(request, response);
     }

@@ -1,6 +1,6 @@
 package interfaces;
 
 public interface IShapes {
-    void draw();
+    String draw();
     void move();
 }

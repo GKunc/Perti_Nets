@@ -78,3 +78,15 @@ body {
     filter: brightness(1.25);
     cursor: pointer;
 }
+
+.square {
+    background-color: red;
+}
+
+.circle {
+    background-color: yellow;
+}
+
+.arrow {
+    background-color: orangered;
+}
