@@ -45,6 +45,8 @@ public class Arrow implements IShapes {
         this.class_name = "arrow";
         this.width = 100;
         this.height = 20;
+        this.x_position = 0;
+        this.y_position = 0;
     }
 
     @Override

@@ -14,6 +14,9 @@
     <link href="./resources/css/index.css" rel="stylesheet" type="text/css">
     <link href="./resources/css/buttons.css" rel="stylesheet" type="text/css">
     <link href="./resources/css/shapes.css" rel="stylesheet" type="text/css">
+
+    <script src="resources/scripts/addShapes.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   </head>
 
   <body>
@@ -23,20 +26,31 @@
         <button class="btn btn-start" name="button" value="start"></button>
         <button class="btn btn-pause" name="button" value="pause"></button>
         <button class="btn-stop" name="button" value="stop"></button>
-        <button class="btn-square" name="button" value="square"></button>
-        <button class="btn-circle" name="button" value="circle"></button>
-        <button class="btn-arrow" name="button" value="arrow"></button>
       </form>
+        <button class="btn-square" onclick="addSquare()" value="square"></button>
+        <button class="btn-circle" onclick="addCircle()" value="circle"></button>
+        <button class="btn-arrow" onclick="addArrow()" value="arrow"></button>
     </div>
 
     <div class="board-container" name="board">
-      <c:forEach items="${net}" var="item">
-        <div class="shape">
-          <img src="resources/images/${item.class_name}.png"
-               class="${item.class_name}"
-               style="width: ${item.width}; height: ${item.height};">
-        </div>
-      </c:forEach>
     </div>
   </body>
+
+  <script>
+      $('.shape').on('mousedown', function(e) {
+          $(this).addClass('active');
+          var oTop = e.pageY - $('.active').offset().top;
+          var oLeft = e.pageX - $('.active').offset().left;
+          $(this).parents().on('mousemove', function(e) {
+              $('.active').offset({
+                  top: e.pageY - oTop,
+                  left: e.pageX - oLeft
+              }).on('mouseup', function() {
+                  $(this).removeClass('active');
+              });
+          });
+          return false;
+      });
+
+  </script>
 </html>

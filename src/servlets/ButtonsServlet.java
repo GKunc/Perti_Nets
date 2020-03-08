@@ -24,6 +24,7 @@ public class ButtonsServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String button = request.getParameter("button");
+        request.getParameter("");
 
         String fileName = "../../web/index.jsp";
 
