@@ -32,22 +32,24 @@
         <button class="btn-arrow" onclick="addArrow()" value="arrow"></button>
     </div>
 
-    <div class="board-container" name="board">
+    <div class="board-container">
+      <svg class="board" width="100%" height="100%">
+      </svg>
     </div>
   </body>
 
   <script>
-      $('.shape').on('mousedown', function(e) {
+      $('.circle').on('mousedown', function(e) {
           $(this).addClass('active');
           var oTop = e.pageY - $('.active').offset().top;
           var oLeft = e.pageX - $('.active').offset().left;
           $(this).parents().on('mousemove', function(e) {
-              $('.active').offset({
-                  top: e.pageY - oTop,
-                  left: e.pageX - oLeft
-              }).on('mouseup', function() {
+            $('active').setAttribute("cx", (e.pageX - oLeft).toString());
+            $('active').setAttribute("cy", (e.pageY - oTop).toString());
+            console.
+            $('.active').on('mouseup', function() {
                   $(this).removeClass('active');
-              });
+            });
           });
           return false;
       });
