@@ -12,7 +12,7 @@
 }
 
 .selected {
-    border: 2px solid red !important;
+    stroke: red !important;
 }
 
 .square {

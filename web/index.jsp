@@ -29,7 +29,7 @@
       </form>
         <button class="btn-square" onclick="addSquare()" value="square"></button>
         <button class="btn-circle" onclick="addCircle()" value="circle"></button>
-        <button class="btn-arrow" onclick="addArrow()" value="arrow"></button>
+        <button class="btn-arrow" onclick="connect()" value="arrow"></button>
     </div>
 
     <div class="board-container">
@@ -39,20 +39,5 @@
   </body>
 
   <script>
-      $('.circle').on('mousedown', function(e) {
-          $(this).addClass('active');
-          var oTop = e.pageY - $('.active').offset().top;
-          var oLeft = e.pageX - $('.active').offset().left;
-          $(this).parents().on('mousemove', function(e) {
-            $('active').setAttribute("cx", (e.pageX - oLeft).toString());
-            $('active').setAttribute("cy", (e.pageY - oTop).toString());
-            console.
-            $('.active').on('mouseup', function() {
-                  $(this).removeClass('active');
-            });
-          });
-          return false;
-      });
-
   </script>
 </html>
