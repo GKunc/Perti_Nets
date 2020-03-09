@@ -26,6 +26,7 @@ function addCircle() {
 }
 
 function addArrow(x1 = 0, y1 = 0, x2 = 0, y2 = 0) {
+
     let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
     line.setAttribute("class", "shape arrow");
     line.setAttribute("x1", x1.toString());
@@ -33,23 +34,32 @@ function addArrow(x1 = 0, y1 = 0, x2 = 0, y2 = 0) {
     line.setAttribute("x2", x2.toString());
     line.setAttribute("y2", y2.toString());
     line.setAttribute("stroke", "black");
-
+    line.setAttribute("marker-end", "url(#arrow)");
     $(".board").prepend(line);
     select("arrow");
 }
 
-function getCoordinates(item) {
+function getCoordinates(item, index) {
     let x, y;
     let class_name = item.getAttribute("class");
 
     if(class_name.includes("circle")) {
-        x = item.getAttribute("cx");
-        y = item.getAttribute("cy");
+        x = parseFloat(item.getAttribute("cx"));
+        if(index == 0) {
+            y = parseFloat(item.getAttribute("cy")) + 30;
+        } else {
+            y = parseFloat(item.getAttribute("cy")) - 34;
+        }
     } else {
         x = parseFloat(item.getAttribute("x")) +
             parseFloat(item.getAttribute("width")) / 2;
-        y = parseFloat(item.getAttribute("y")) +
-            parseFloat(item.getAttribute("height")) / 2;
+        if(index == 0) {
+            y = parseFloat(item.getAttribute("y")) +
+                parseFloat(item.getAttribute("height"));
+        } else {
+            y = parseFloat(item.getAttribute("y")) - 4;
+        }
+
     }
     return [x, y]
 }
@@ -62,8 +72,8 @@ function connect() {
         let x1,y1, x2, y2;
         let firstItem = selectedItems.item(0);
         let secondItem = selectedItems.item(1);
-        [x1, y1] = getCoordinates(firstItem);
-        [x2, y2] = getCoordinates(secondItem);
+        [x1, y1] = getCoordinates(firstItem, 0);
+        [x2, y2] = getCoordinates(secondItem, 1);
         addArrow(x1, y1, x2, y2);
 
         firstItem.classList.remove("selected");

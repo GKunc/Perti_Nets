@@ -17,10 +17,10 @@
 
     <script src="resources/scripts/addShapes.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
   </head>
 
   <body>
-
     <div class="button-container">
       <form action="/buttons" method="post">
         <button class="btn btn-start" name="button" value="start"></button>
@@ -34,6 +34,11 @@
 
     <div class="board-container">
       <svg class="board" width="100%" height="100%">
+        <defs>
+          <marker id="arrow" markerWidth="13" markerHeight="13" refx="2" refy="6" orient="auto">
+            <path d="M2,1 L2,10 L10,6 L2,2" style="fill:black;" />
+          </marker>
+        </defs>
       </svg>
     </div>
   </body>
