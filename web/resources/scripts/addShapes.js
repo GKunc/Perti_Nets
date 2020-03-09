@@ -27,7 +27,7 @@ function addCircle() {
 
 function addArrow(x1 = 0, y1 = 0, x2 = 0, y2 = 0) {
     let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("class", "arrow");
+    line.setAttribute("class", "shape arrow");
     line.setAttribute("x1", x1.toString());
     line.setAttribute("y1", y1.toString());
     line.setAttribute("x2", x2.toString());
@@ -35,6 +35,7 @@ function addArrow(x1 = 0, y1 = 0, x2 = 0, y2 = 0) {
     line.setAttribute("stroke", "black");
 
     $(".board").prepend(line);
+    select("arrow");
 }
 
 function getCoordinates(item) {
