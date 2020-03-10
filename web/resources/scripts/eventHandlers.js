@@ -65,7 +65,7 @@ function select(id) {
     let clickedElement = document.querySelector('.board');
     $(document.getElementById(id)).on('dblclick', function() {
         $(this).parents().on("keypress", function(event) {
-            if(event.which == 8 && $('#' + id).hasClass("selected")) {
+            if(event.which == 8 && $(document.getElementById(id)).hasClass("selected")) {
                 clickedElement.removeChild(document.getElementsByClassName("selected")[0]);
                 clearList(selectedElements);
             }
