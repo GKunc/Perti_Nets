@@ -32,9 +32,9 @@ function addCircle() {
 }
 
 function addArrow(id1, x1 = 0, y1 = 0, id2, x2 = 0, y2 = 0) {
-
     let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("id", id1 + ';' + id2);
+    let id = id1 + ';' + id2;
+    line.setAttribute("id", id);
     line.setAttribute("class", "shape arrow");
     line.setAttribute("x1", x1.toString());
     line.setAttribute("y1", y1.toString());
