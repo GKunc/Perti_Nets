@@ -1,4 +1,4 @@
-var id = 0;
+let id = 0;
 
 function addSquare() {
     let square = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -32,6 +32,7 @@ function addCircle() {
 function addArrow(x1 = 0, y1 = 0, x2 = 0, y2 = 0) {
 
     let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("id", setId());
     line.setAttribute("class", "shape arrow");
     line.setAttribute("x1", x1.toString());
     line.setAttribute("y1", y1.toString());
