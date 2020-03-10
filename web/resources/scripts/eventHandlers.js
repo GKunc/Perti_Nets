@@ -33,15 +33,13 @@ function select(class_name) {
         $(this).parents().on("keypress", function(event) {
             if(event.which == 8 && $('.' + class_name).hasClass("selected")) {
                 clickedElement.removeChild(document.getElementsByClassName("selected")[0]);
+                clearList(selectedElements);
             }
         });
 
         let elementId = $(this).attr('id');
-        var index = selectedElements.indexOf(elementId);
         if($(this).hasClass("selected")) {
-            if (index !== -1) {
-                selectedElements.splice(index, 1);
-            }
+            removeElementById(selectedElements, elementId);
             $(this).removeClass("selected");
             $(this).attr('stroke', "black")
         } else {

@@ -26,3 +26,14 @@ function getCoordinates(item, index) {
 function setId() {
     return id++;
 }
+
+function removeElementById(list, id) {
+    let index = list.indexOf(id);
+    if (index !== -1) {
+        list.splice(index, 1);
+    }
+}
+
+function clearList(list) {
+    list.splice(0, list.length);
+}
