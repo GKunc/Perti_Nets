@@ -5,18 +5,17 @@ function getCoordinates(item, index) {
     if(class_name.includes("circle")) {
         x = parseFloat(item.getAttribute("cx"));
         if(index == 0) {
-            y = parseFloat(item.getAttribute("cy")) + 30;
+            y = parseFloat(item.getAttribute("cy"));
         } else {
-            y = parseFloat(item.getAttribute("cy")) - 34;
+            y = parseFloat(item.getAttribute("cy"));
         }
     } else {
-        x = parseFloat(item.getAttribute("x")) +
-            parseFloat(item.getAttribute("width")) / 2;
+        x = parseFloat(item.getAttribute("x")) + 35;
         if(index == 0) {
             y = parseFloat(item.getAttribute("y")) +
                 parseFloat(item.getAttribute("height"));
         } else {
-            y = parseFloat(item.getAttribute("y")) - 4;
+            y = parseFloat(item.getAttribute("y"));
         }
 
     }

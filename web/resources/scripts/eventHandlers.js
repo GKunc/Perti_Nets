@@ -7,6 +7,7 @@ function move(id, class_name) {
         let startOfArrow = [];
         let endOfArrow = [];
         let foundId;
+        let offsetX, offsetY;
 
         arrows.forEach(element => {
             arrowsIds.push(element.getAttribute("id"));
@@ -18,9 +19,13 @@ function move(id, class_name) {
 
         $(this).parents().on('mousemove', function(e) {
             if(class_name == "circle") {
+                offsetX = 15;
+                offsetY = 15;
                 $(".active").attr("cx", e.pageX - 150);
                 $(".active").attr("cy", e.pageY);
             } else if(class_name == "square") {
+                offsetX = 35;
+                offsetY = 10;
                 $(".active").attr("x", e.pageX - 150);
                 $(".active").attr("y", e.pageY - 10);
             }
@@ -32,8 +37,8 @@ function move(id, class_name) {
                 arrowsIds.forEach(arrowId => {
                     if(arrowId.split(";")[0] == id) {
                         foundId = arrowId;
-                        $(document.getElementById(arrowId)).attr("x1", e.pageX - 150);
-                        $(document.getElementById(arrowId)).attr("y1", e.pageY - 10);
+                        $(document.getElementById(arrowId)).attr("x1", e.pageX - 150 + offsetX);
+                        $(document.getElementById(arrowId)).attr("y1", e.pageY - 10 + offsetY);
                     }
                 });
             }
@@ -41,8 +46,8 @@ function move(id, class_name) {
                 arrowsIds.forEach(arrowId => {
                     if(arrowId.split(";")[1] == id) {
                         foundId = arrowId;
-                        $(document.getElementById(arrowId)).attr("x2", e.pageX - 150);
-                        $(document.getElementById(arrowId)).attr("y2", e.pageY - 10);
+                        $(document.getElementById(arrowId)).attr("x2", e.pageX - 150 + offsetX);
+                        $(document.getElementById(arrowId)).attr("y2", e.pageY - 10 + offsetY);
                     }
                 });
             }

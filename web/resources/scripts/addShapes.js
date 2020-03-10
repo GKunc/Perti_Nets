@@ -42,6 +42,6 @@ function addArrow(id1, x1 = 0, y1 = 0, id2, x2 = 0, y2 = 0) {
     line.setAttribute("y2", y2.toString());
     line.setAttribute("stroke", "black");
     line.setAttribute("marker-end", "url(#arrow)");
-    $(".board").prepend(line);
+    $(".board").append(line);
     select(id);
 }
