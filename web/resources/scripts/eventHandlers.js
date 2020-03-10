@@ -1,7 +1,7 @@
 var selectedElements = [];
 
-function move(class_name) {
-    $("." + class_name).on('mousedown', function(e) {
+function move(id, class_name) {
+    $(document.getElementById(id)).on('mousedown', function(e) {
         $(this).addClass('active');
 
         $(this).parents().on('mousemove', function(e) {
@@ -26,24 +26,23 @@ function move(class_name) {
     });
 }
 
-function select(class_name) {
+function select(id) {
     let clickedElement = document.querySelector('.board');
-    $("." + class_name).off('dblclick');
-    $("." + class_name).on('dblclick', function() {
+    $(document.getElementById(id)).on('dblclick', function() {
+        console.log("here")
         $(this).parents().on("keypress", function(event) {
-            if(event.which == 8 && $('.' + class_name).hasClass("selected")) {
+            if(event.which == 8 && $('#' + id).hasClass("selected")) {
                 clickedElement.removeChild(document.getElementsByClassName("selected")[0]);
                 clearList(selectedElements);
             }
         });
 
-        let elementId = $(this).attr('id');
         if($(this).hasClass("selected")) {
-            removeElementById(selectedElements, elementId);
+            removeElementById(selectedElements, id);
             $(this).removeClass("selected");
             $(this).attr('stroke', "black")
         } else {
-            selectedElements.push(elementId);
+            selectedElements.push(id);
             $(this).addClass("selected");
             $(this).attr('stroke', "red")
         }

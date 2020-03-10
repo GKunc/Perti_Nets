@@ -11,7 +11,7 @@ function connect() {
         let secondItem = document.getElementById(selectedElements[1]);
         [x1, y1] = getCoordinates(firstItem, 0);
         [x2, y2] = getCoordinates(secondItem, 1);
-        addArrow(x1, y1, x2, y2);
+        addArrow(selectedElements[0], x1, y1, selectedElements[1], x2, y2);
 
         selectedElements.pop();
         firstItem.classList.remove("selected");

@@ -2,7 +2,8 @@ let id = 0;
 
 function addSquare() {
     let square = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    square.setAttribute("id", setId());
+    let id = setId();
+    square.setAttribute("id", id);
     square.setAttribute("class", "shape square");
     square.setAttribute("x", "50");
     square.setAttribute("y", "50");
@@ -10,13 +11,14 @@ function addSquare() {
     square.setAttribute("height", "20");
 
     $(".board").append(square);
-    move("square");
-    select("square")
+    move(id, "square");
+    select(id);
 }
 
 function addCircle() {
     let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    circle.setAttribute("id", setId());
+    let id = setId();
+    circle.setAttribute("id", id);
     circle.setAttribute("class", "shape circle");
     circle.setAttribute("cx", "50");
     circle.setAttribute("cy", "50");
@@ -25,14 +27,14 @@ function addCircle() {
     circle.setAttribute("fill", "white");
 
     $(".board").append(circle);
-    move("circle");
-    select("circle");
+    move(id, "circle");
+    select(id);
 }
 
-function addArrow(x1 = 0, y1 = 0, x2 = 0, y2 = 0) {
+function addArrow(id1, x1 = 0, y1 = 0, id2, x2 = 0, y2 = 0) {
 
     let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("id", setId());
+    line.setAttribute("id", id1 + ';' + id2);
     line.setAttribute("class", "shape arrow");
     line.setAttribute("x1", x1.toString());
     line.setAttribute("y1", y1.toString());
@@ -41,5 +43,5 @@ function addArrow(x1 = 0, y1 = 0, x2 = 0, y2 = 0) {
     line.setAttribute("stroke", "black");
     line.setAttribute("marker-end", "url(#arrow)");
     $(".board").prepend(line);
-    select("arrow");
+    select(id);
 }
