@@ -1,5 +1,8 @@
+var id = 0;
+
 function addSquare() {
     let square = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    square.setAttribute("id", setId());
     square.setAttribute("class", "shape square");
     square.setAttribute("x", "50");
     square.setAttribute("y", "50");
@@ -13,6 +16,7 @@ function addSquare() {
 
 function addCircle() {
     let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.setAttribute("id", setId());
     circle.setAttribute("class", "shape circle");
     circle.setAttribute("cx", "50");
     circle.setAttribute("cy", "50");
@@ -37,93 +41,4 @@ function addArrow(x1 = 0, y1 = 0, x2 = 0, y2 = 0) {
     line.setAttribute("marker-end", "url(#arrow)");
     $(".board").prepend(line);
     select("arrow");
-}
-
-function getCoordinates(item, index) {
-    let x, y;
-    let class_name = item.getAttribute("class");
-
-    if(class_name.includes("circle")) {
-        x = parseFloat(item.getAttribute("cx"));
-        if(index == 0) {
-            y = parseFloat(item.getAttribute("cy")) + 30;
-        } else {
-            y = parseFloat(item.getAttribute("cy")) - 34;
-        }
-    } else {
-        x = parseFloat(item.getAttribute("x")) +
-            parseFloat(item.getAttribute("width")) / 2;
-        if(index == 0) {
-            y = parseFloat(item.getAttribute("y")) +
-                parseFloat(item.getAttribute("height"));
-        } else {
-            y = parseFloat(item.getAttribute("y")) - 4;
-        }
-
-    }
-    return [x, y]
-}
-
-function connect() {
-    let selectedItems = document.getElementsByClassName("selected");
-    if(selectedItems.length != 2) {
-        alert('Please select two items to connect!');
-    } else {
-        let x1,y1, x2, y2;
-        let firstItem = selectedItems.item(0);
-        let secondItem = selectedItems.item(1);
-        [x1, y1] = getCoordinates(firstItem, 0);
-        [x2, y2] = getCoordinates(secondItem, 1);
-        addArrow(x1, y1, x2, y2);
-
-        firstItem.classList.remove("selected");
-        firstItem.setAttribute("stroke", "black");
-        secondItem.classList.remove("selected");
-        secondItem.setAttribute("stroke", "black");
-    }
-}
-
-function move(class_name) {
-    $("." + class_name).on('mousedown', function(e) {
-        $(this).addClass('active');
-
-        $(this).parents().on('mousemove', function(e) {
-            if(class_name == "circle") {
-                $(".active").attr("cx", e.pageX - 150);
-                $(".active").attr("cy", e.pageY);
-            } else if(class_name == "square") {
-                $(".active").attr("x", e.pageX - 150);
-                $(".active").attr("y", e.pageY - 10);
-            } else if(class_name == "arrow") {
-                $(".active").attr("x1", e.pageX - 150);
-                $(".active").attr("y1", e.pageY - 10);
-                $(".active").attr("x2", e.pageX - 150);
-                $(".active").attr("y2", e.pageY - 10);
-            }
-        });
-
-        $(this).on("mouseup", function (e) {
-            $(this).removeClass("active");
-        });
-        return false;
-    });
-}
-
-function select(class_name) {
-    let clickedElement = document.querySelector('.board');
-    $("." + class_name).off('dblclick');
-    $("." + class_name).on('dblclick', function() {
-        $(this).parents().on("keypress", function(event) {
-            if(event.which == 8 && $('.' + class_name).hasClass("selected")) {
-                clickedElement.removeChild(document.getElementsByClassName("selected")[0]);
-            }
-        });
-        if($(this).hasClass("selected")) {
-            $(this).removeClass("selected");
-            $(this).attr('stroke', "black")
-        } else {
-            $(this).addClass("selected");
-            $(this).attr('stroke', "red")
-        }
-    });
 }

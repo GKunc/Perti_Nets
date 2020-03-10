@@ -10,12 +10,16 @@
 
 <html>
   <head>
-    <title>Perti Nets Creator</title>
+    <title>Petri Nets Creator</title>
     <link href="./resources/css/index.css" rel="stylesheet" type="text/css">
     <link href="./resources/css/buttons.css" rel="stylesheet" type="text/css">
     <link href="./resources/css/shapes.css" rel="stylesheet" type="text/css">
 
     <script src="resources/scripts/addShapes.js"></script>
+    <script src="resources/scripts/helpers.js"></script>
+    <script src="resources/scripts/eventHandlers.js"></script>
+    <script src="resources/scripts/netModel.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
   </head>
