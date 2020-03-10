@@ -1,7 +1,19 @@
-var selectedElements = [];
+let selectedElements = [];
 
 function move(id, class_name) {
     $(document.getElementById(id)).on('mousedown', function(e) {
+        let arrows = Array.from(document.getElementsByClassName("arrow"));
+        let arrowsIds = [];
+        let startOfArrow = [];
+        let endOfArrow = [];
+        let foundId;
+
+        arrows.forEach(element => {
+            arrowsIds.push(element.getAttribute("id"));
+            startOfArrow.push(element.getAttribute("id").split(";")[0]);
+            endOfArrow.push(element.getAttribute("id").split(";")[1]);
+        });
+
         $(this).addClass('active');
 
         $(this).parents().on('mousemove', function(e) {
@@ -11,15 +23,33 @@ function move(id, class_name) {
             } else if(class_name == "square") {
                 $(".active").attr("x", e.pageX - 150);
                 $(".active").attr("y", e.pageY - 10);
-            } else if(class_name == "arrow") {
-                $(".active").attr("x1", e.pageX - 150);
-                $(".active").attr("y1", e.pageY - 10);
-                $(".active").attr("x2", e.pageX - 150);
-                $(".active").attr("y2", e.pageY - 10);
+            }
+
+            let startIndex = startOfArrow.indexOf(id.toString());
+            let endIndex = endOfArrow.indexOf(id.toString());
+
+            if (startIndex !== -1) {
+                arrowsIds.forEach(arrowId => {
+                    if(arrowId.split(";")[0] == id) {
+                        foundId = arrowId;
+                        $(document.getElementById(arrowId)).attr("x1", e.pageX - 150);
+                        $(document.getElementById(arrowId)).attr("y1", e.pageY - 10);
+                    }
+                });
+            }
+            if (endIndex !== -1) {
+                arrowsIds.forEach(arrowId => {
+                    if(arrowId.split(";")[1] == id) {
+                        foundId = arrowId;
+                        $(document.getElementById(arrowId)).attr("x2", e.pageX - 150);
+                        $(document.getElementById(arrowId)).attr("y2", e.pageY - 10);
+                    }
+                });
             }
         });
 
         $(this).on("mouseup", function (e) {
+            $(this).parents().off('mousemove');
             $(this).removeClass("active");
         });
         return false;
@@ -29,7 +59,6 @@ function move(id, class_name) {
 function select(id) {
     let clickedElement = document.querySelector('.board');
     $(document.getElementById(id)).on('dblclick', function() {
-        console.log("here")
         $(this).parents().on("keypress", function(event) {
             if(event.which == 8 && $('#' + id).hasClass("selected")) {
                 clickedElement.removeChild(document.getElementsByClassName("selected")[0]);
@@ -46,6 +75,5 @@ function select(id) {
             $(this).addClass("selected");
             $(this).attr('stroke', "red")
         }
-        console.log(selectedElements)
     });
 }
