@@ -1,4 +1,5 @@
 let selectedElements = [];
+let tokens = [];
 
 function move(id, class_name) {
     $(document.getElementById(id)).on('mousedown', function(e) {
@@ -87,6 +88,13 @@ function select(id) {
 function addToken() {
     $('.circle').off('dblclick');
     $('.circle').on('dblclick', function() {
-       alert('clicked');
+        let x = $(this).attr('cx');
+        let y = $(this).attr('cy');
+        let id = $(this).attr('id');
+        if(tokens.indexOf(id) === -1) {
+            addTokenToCircle(id,x, y);
+            tokens.push(id);
+        }
+        console.log(tokens)
     });
 }

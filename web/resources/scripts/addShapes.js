@@ -46,6 +46,14 @@ function addArrow(id1, x1 = 0, y1 = 0, id2, x2 = 0, y2 = 0) {
     select(id);
 }
 
-function addToken(circleObject) {
-
+function addTokenToCircle(id, x, y) {
+    let token = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    token.setAttribute("id", id);
+    token.setAttribute("class", "shape token");
+    token.setAttribute("cx", x.toString());
+    token.setAttribute("cy", y.toString());
+    token.setAttribute("r", "10");
+    token.setAttribute("stroke", "black");
+    token.setAttribute("fill", "black");
+    $(".board").append(token);
 }
