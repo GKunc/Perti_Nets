@@ -12,15 +12,20 @@
     cursor: pointer;
 }
 
-.btn-start {
-    background-image: url("../images/start.png");
-    background-size: cover;
+.btn-build {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-image: url("../images/build.png");
+    background-color: dodgerblue !important;
+    background-size: 60%;
+    background-position: center;
+    background-repeat: no-repeat;
     border-radius: 100%;
+    padding: 10px;
 }
 
-.btn-pause {
-    margin-top: 20px;
-    background-image: url("../images/pause.png");
+.btn-start {
+    background-image: url("../images/start.png");
     background-size: cover;
     border-radius: 100%;
 }

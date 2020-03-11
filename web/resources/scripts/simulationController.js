@@ -1,4 +1,4 @@
-function start() {
+function build() {
     $('.shape').off();
 
     for(let i=0; i<selectedElements.length; i++) {
@@ -10,4 +10,10 @@ function start() {
     addToken();
 }
 
+function start() {
+    console.log("Start");
+}
 
+function stop() {
+    console.log("Start");
+}
