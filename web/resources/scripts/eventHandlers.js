@@ -18,12 +18,12 @@ function move(id, class_name) {
         $(this).addClass('active');
 
         $(this).parents().on('mousemove', function(e) {
-            if(class_name == "circle") {
+            if(class_name === "circle") {
                 offsetX = 15;
                 offsetY = 15;
                 $(".active").attr("cx", e.pageX - 150);
                 $(".active").attr("cy", e.pageY);
-            } else if(class_name == "square") {
+            } else if(class_name === "square") {
                 offsetX = 35;
                 offsetY = 10;
                 $(".active").attr("x", e.pageX - 150);
@@ -37,7 +37,7 @@ function move(id, class_name) {
                 arrowsIds.forEach(arrowId => {
                     if(arrowId.split(";")[0] == id) {
                         foundId = arrowId;
-                        $(document.getElementById(arrowId)).attr("x1", e.pageX - 150 + offsetX);
+                        $(document.getElementById(arrowId)).attr("x1", e.pageX - 160 + offsetX);
                         $(document.getElementById(arrowId)).attr("y1", e.pageY - 10 + offsetY);
                     }
                 });
@@ -46,7 +46,7 @@ function move(id, class_name) {
                 arrowsIds.forEach(arrowId => {
                     if(arrowId.split(";")[1] == id) {
                         foundId = arrowId;
-                        $(document.getElementById(arrowId)).attr("x2", e.pageX - 150 + offsetX);
+                        $(document.getElementById(arrowId)).attr("x2", e.pageX - 160 + offsetX);
                         $(document.getElementById(arrowId)).attr("y2", e.pageY - 10 + offsetY);
                     }
                 });
@@ -63,10 +63,11 @@ function move(id, class_name) {
 
 function select(id) {
     let clickedElement = document.querySelector('.board');
+    $(document.getElementById(id)).off('dblclick');
     $(document.getElementById(id)).on('dblclick', function() {
         $(this).parents().on("keypress", function(event) {
             if(event.which == 8 && $(document.getElementById(id)).hasClass("selected")) {
-                clickedElement.removeChild(document.getElementsByClassName("selected")[0]);
+                clickedElement.removeChild($(document.getElementById(id))[0]);
                 clearList(selectedElements);
             }
         });
@@ -80,5 +81,12 @@ function select(id) {
             $(this).addClass("selected");
             $(this).attr('stroke', "red")
         }
+    });
+}
+
+function addToken() {
+    $('.circle').off('dblclick');
+    $('.circle').on('dblclick', function() {
+       alert('clicked');
     });
 }

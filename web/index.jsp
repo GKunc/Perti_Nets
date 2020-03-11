@@ -19,6 +19,7 @@
     <script src="resources/scripts/helpers.js"></script>
     <script src="resources/scripts/eventHandlers.js"></script>
     <script src="resources/scripts/netModel.js"></script>
+    <script src="resources/scripts/simulationController.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
@@ -26,11 +27,9 @@
 
   <body>
     <div class="button-container">
-      <form action="/buttons" method="post">
-        <button class="btn btn-start" name="button" value="start"></button>
+        <button class="btn btn-start" onclick="start()"></button>
         <button class="btn btn-pause" name="button" value="pause"></button>
         <button class="btn-stop" name="button" value="stop"></button>
-      </form>
         <button class="btn-square" onclick="addSquare()" value="square"></button>
         <button class="btn-circle" onclick="addCircle()" value="circle"></button>
         <button class="btn-arrow" onclick="connect()" value="arrow"></button>
