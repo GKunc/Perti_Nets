@@ -1,9 +1,3 @@
-var net = [];
-
-function addElementToList(object) {
-    console.log(net)
-}
-
 function connect() {
     if(validateConnection()) {
         let x1, y1, x2, y2;

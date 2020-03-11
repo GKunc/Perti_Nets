@@ -7,7 +7,6 @@ function start() {
         document.getElementById(elementId).setAttribute("stroke", "black");
     }
     clearList(selectedElements);
-    console.log(selectedElements);
     addToken();
 }
 

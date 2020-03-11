@@ -15,6 +15,7 @@
     <link href="./resources/css/buttons.css" rel="stylesheet" type="text/css">
     <link href="./resources/css/shapes.css" rel="stylesheet" type="text/css">
 
+    <script src="resources/scripts/globalVariables.js"></script>
     <script src="resources/scripts/addShapes.js"></script>
     <script src="resources/scripts/helpers.js"></script>
     <script src="resources/scripts/eventHandlers.js"></script>
@@ -30,8 +31,8 @@
         <button class="btn btn-start" onclick="start()"></button>
         <button class="btn btn-pause" name="button" value="pause"></button>
         <button class="btn-stop" name="button" value="stop"></button>
-        <button class="btn-square" onclick="addSquare()" value="square"></button>
-        <button class="btn-circle" onclick="addCircle()" value="circle"></button>
+        <button class="btn-square" onclick="addTransition()" value="square"></button>
+        <button class="btn-circle" onclick="addPlace()" value="circle"></button>
         <button class="btn-arrow" onclick="connect()" value="arrow"></button>
     </div>
 

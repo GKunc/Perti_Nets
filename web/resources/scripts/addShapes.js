@@ -1,6 +1,4 @@
-let id = 0;
-
-function addSquare(x = 50, y = 50) {
+function addTransition(x = 50, y = 50) {
     let square = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     let id = setId();
     square.setAttribute("id", id);
@@ -15,7 +13,7 @@ function addSquare(x = 50, y = 50) {
     select(id);
 }
 
-function addCircle(x = 50, y = 50, r = 30, color = "white") {
+function addPlace(x = 50, y = 50, r = 30, color = "white") {
     let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     let id = setId();
     circle.setAttribute("id", id);
@@ -46,7 +44,7 @@ function addArrow(id1, x1 = 0, y1 = 0, id2, x2 = 0, y2 = 0) {
     select(id);
 }
 
-function addTokenToCircle(id, x, y) {
+function addTokenToPlace(id, x, y) {
     let token = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     token.setAttribute("id", id);
     token.setAttribute("class", "shape token");

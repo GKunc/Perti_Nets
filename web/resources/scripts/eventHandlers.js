@@ -1,6 +1,3 @@
-let selectedElements = [];
-let tokens = [];
-
 function move(id, class_name) {
     $(document.getElementById(id)).on('mousedown', function(e) {
         let arrows = Array.from(document.getElementsByClassName("arrow"));
@@ -91,10 +88,17 @@ function addToken() {
         let x = $(this).attr('cx');
         let y = $(this).attr('cy');
         let id = $(this).attr('id');
-        if(tokens.indexOf(id) === -1) {
-            addTokenToCircle(id,x, y);
-            tokens.push(id);
+        let tokenId = id + 'token';
+
+        if(tokens.indexOf(tokenId) === -1) {
+            addTokenToPlace(id + 'token', x, y);
+            tokens.push(tokenId);
+        } else {
+            let clickedElement = document.querySelector('.board');
+            let elementToRemove = document.getElementById(tokenId);
+            console.log(elementToRemove)
+            clickedElement.removeChild(elementToRemove);
+            removeElementById(tokens, tokenId)
         }
-        console.log(tokens)
     });
 }

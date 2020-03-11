@@ -23,7 +23,7 @@ function getCoordinates(item, index) {
 }
 
 function setId() {
-    return id++;
+    return currentId++;
 }
 
 function removeElementById(list, id) {
