@@ -12,7 +12,13 @@ function addTransition(x = 50, y = 50) {
     move(id, "square");
     select(id);
 
-    netMatrix.push([]);
+    let newTransition = [];
+    if(placesCounter !== 0) {
+        for(let i=0; i<placesCounter; i++) {
+            newTransition.push(0);
+        }
+    }
+    netMatrix.push(newTransition);
 }
 
 function addPlace(x = 50, y = 50, r = 30, color = "white") {
@@ -30,7 +36,10 @@ function addPlace(x = 50, y = 50, r = 30, color = "white") {
     move(id, "circle");
     select(id);
 
-    placesMatrix.push(0);
+    placesCounter++;
+    for(let i=0; i<netMatrix.length; i++) {
+        netMatrix[i].push(0);
+    }
 }
 
 function addArrow(id1, x1 = 0, y1 = 0, id2, x2 = 0, y2 = 0) {

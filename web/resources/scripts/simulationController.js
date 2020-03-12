@@ -8,9 +8,7 @@ function build() {
     }
     clearList(selectedElements);
     addToken();
-    for(let i=0; i<netMatrix.length; i++) {
-        netMatrix[i].push(placesMatrix);
-    }
+
     console.log(netMatrix)
 }
 

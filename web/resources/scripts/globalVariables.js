@@ -1,5 +1,5 @@
 let netMatrix = [];
-let placesMatrix = [];
+let placesCounter = 0;
 
 let currentTransitionId = 0;
 let currentPlaceId = 0;
