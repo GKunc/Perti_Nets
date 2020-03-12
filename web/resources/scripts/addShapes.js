@@ -11,6 +11,19 @@ function addTransition(x = 50, y = 50) {
     $(".board").append(square);
     move(id, "square");
     select(id);
+    if(placesMatrix.length > 0) {
+        netMatrix.push(placesMatrix);
+    } else {
+        if(netMatrix.length > 0) {
+            let newMatrix = [];
+            for(let i=0; i<netMatrix[0].length; i++) {
+                newMatrix.push(0);
+            }
+            netMatrix.push(newMatrix);
+        } else {
+            netMatrix.push([]);
+        }
+    }
 }
 
 function addPlace(x = 50, y = 50, r = 30, color = "white") {
@@ -27,6 +40,10 @@ function addPlace(x = 50, y = 50, r = 30, color = "white") {
     $(".board").append(circle);
     move(id, "circle");
     select(id);
+    for(let i=0; i<netMatrix.length; i++) {
+        netMatrix[i].push(0);
+    }
+    placesMatrix.push(0);
 }
 
 function addArrow(id1, x1 = 0, y1 = 0, id2, x2 = 0, y2 = 0) {

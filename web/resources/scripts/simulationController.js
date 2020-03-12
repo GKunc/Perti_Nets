@@ -8,6 +8,8 @@ function build() {
     }
     clearList(selectedElements);
     addToken();
+
+    console.log(netMatrix)
 }
 
 function start() {
