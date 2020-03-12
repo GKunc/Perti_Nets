@@ -22,8 +22,12 @@ function getCoordinates(item, index) {
     return [x, y]
 }
 
-function setId() {
-    return currentId++;
+function setTransitionId() {
+    return currentTransitionId++;
+}
+
+function setPlaceId() {
+    return currentPlaceId++;
 }
 
 function removeElementById(list, id) {

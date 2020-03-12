@@ -1,7 +1,7 @@
 function addTransition(x = 50, y = 50) {
     let square = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    let id = setId();
-    square.setAttribute("id", id);
+    let id = setTransitionId();
+    square.setAttribute("id", "t" + id);
     square.setAttribute("class", "shape square");
     square.setAttribute("x", x.toString());
     square.setAttribute("y", y.toString());
@@ -17,8 +17,8 @@ function addTransition(x = 50, y = 50) {
 
 function addPlace(x = 50, y = 50, r = 30, color = "white") {
     let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    let id = setId();
-    circle.setAttribute("id", id);
+    let id = setPlaceId();
+    circle.setAttribute("id", "p" + id);
     circle.setAttribute("class", "shape circle");
     circle.setAttribute("cx", x.toString());
     circle.setAttribute("cy", y.toString());

@@ -7,6 +7,15 @@ function connect() {
         [x2, y2] = getCoordinates(secondItem, 1);
         addArrow(selectedElements[0], x1, y1, selectedElements[1], x2, y2);
 
+        // set netMatrix to include connection
+        // todo
+        if(firstItem.classList.contains("square")) {
+
+        }
+
+        console.log(firstItem.classList);
+        console.log(secondItem.classList);
+
         selectedElements.pop();
         firstItem.classList.remove("selected");
         firstItem.setAttribute("stroke", "black");
