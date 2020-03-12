@@ -7,7 +7,7 @@ function build() {
         document.getElementById(elementId).setAttribute("stroke", "black");
     }
     clearList(selectedElements);
-    addToken();
+    addTokenEventHandler();
 
     console.log(netMatrix)
 }

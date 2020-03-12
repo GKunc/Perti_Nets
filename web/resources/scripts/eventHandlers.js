@@ -1,7 +1,6 @@
-function move() {
+function moveEventHandler() {
     $('.shape').off('mousedown');
     $('.shape').on('mousedown', function() {
-        console.log("Mousedown")
         let arrows = Array.from(document.getElementsByClassName("arrow"));
         let arrowsIds = [];
         let startOfArrow = [];
@@ -16,10 +15,6 @@ function move() {
             startOfArrow.push(element.getAttribute("id").split(";")[0]);
             endOfArrow.push(element.getAttribute("id").split(";")[1]);
         });
-
-        console.log(arrowsIds)
-        console.log(startOfArrow)
-        console.log(endOfArrow)
 
         $(this).addClass('active');
         let movedElement = $(this);
@@ -68,7 +63,7 @@ function move() {
     });
 }
 
-function select() {
+function selectEventHandler() {
     let clickedElement = document.querySelector('.board');
     $('.shape').off('dblclick');
     $('.shape').on('dblclick', function() {
@@ -93,7 +88,7 @@ function select() {
     });
 }
 
-function addToken() {
+function addTokenEventHandler() {
     $('.circle').on('dblclick', function() {
 
         let x = $(this).attr('cx');
