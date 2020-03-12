@@ -9,8 +9,8 @@ function addTransition(x = 50, y = 50) {
     square.setAttribute("height", "20");
 
     $(".board").append(square);
-    move(id, "square");
-    select(id);
+    select();
+    move();
 
     let newTransition = [];
     if(placesCounter !== 0) {
@@ -33,8 +33,8 @@ function addPlace(x = 50, y = 50, r = 30, color = "white") {
     circle.setAttribute("fill", color);
 
     $(".board").append(circle);
-    move(id, "circle");
-    select(id);
+    select();
+    move();
 
     placesCounter++;
     for(let i=0; i<netMatrix.length; i++) {
@@ -54,7 +54,7 @@ function addArrow(id1, x1 = 0, y1 = 0, id2, x2 = 0, y2 = 0) {
     line.setAttribute("stroke", "black");
     line.setAttribute("marker-end", "url(#arrow)");
     $(".board").append(line);
-    select(id);
+    select();
 }
 
 function addTokenToPlace(id, x, y) {
