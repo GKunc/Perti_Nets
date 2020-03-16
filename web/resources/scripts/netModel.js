@@ -9,12 +9,21 @@ function connect() {
 
         // set netMatrix to include connection
         // todo
-        if(firstItem.classList.contains("square")) {
+        let groupId, elementId;
 
+        if(firstItem.classList.contains("square")) {
+            groupId = parseInt((firstItem.getAttribute("id")).substr(1));
+            elementId = parseInt((secondItem.getAttribute("id")).substr(1));
+        } else if(secondItem.classList.contains("square")) {
+            groupId = parseInt((secondItem.getAttribute("id")).substr(1));
+            elementId = parseInt((firstItem.getAttribute("id")).substr(1));
         }
 
-        console.log(firstItem.classList);
-        console.log(secondItem.classList);
+        if(firstItem.classList.contains("square")) {
+            netMatrix[groupId][elementId] = 1;
+        } else {
+            netMatrix[groupId][elementId] = -1;
+        }
 
         selectedElements.pop();
         firstItem.classList.remove("selected");
