@@ -70,6 +70,21 @@ function selectEventHandler() {
         let id = $(this).attr('id');
         $(this).parents().on("keypress", function(event) {
             if(event.which == 8 && $(document.getElementById(id)).hasClass("selected")) {
+                if($(document.getElementById(id)).hasClass("arrow")) {
+                    let splitedID = id.toString().split(";");
+                    let groupId = 0;
+                    let elementId = 0;
+                    splitedID.forEach(id => {
+                        if(id.includes("p")) {
+                            elementId = parseInt(id.substr(1));
+                        } else if(id.includes("t")) {
+                            groupId = parseInt(id.substr(1));
+                        }
+                    })
+                    netMatrix[groupId][elementId] = 0;
+                    console.log(netMatrix);
+                }
+
                 clickedElement.removeChild($(document.getElementById(id))[0]);
                 clearList(selectedElements);
             }
