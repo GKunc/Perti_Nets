@@ -40,3 +40,23 @@ function removeElementById(list, id) {
 function clearList(list) {
     list.splice(0, list.length);
 }
+
+function splitArrowToStartAndEnd(arrows, arrowsIds, startOfArrow, endOfArrow) {
+    arrows.forEach(element => {
+        arrowsIds.push(element.getAttribute("id"));
+        startOfArrow.push(element.getAttribute("id").split(";")[0]);
+        endOfArrow.push(element.getAttribute("id").split(";")[1]);
+    });
+}
+
+function splitArrowId(placeAndTransitionId) {
+    let elementId, groupId;
+    placeAndTransitionId.forEach(id => {
+        if(id.includes("p")) {
+            elementId = parseInt(id.substr(1));
+        } else if(id.includes("t")) {
+            groupId = parseInt(id.substr(1));
+        }
+    });
+    return [groupId, elementId];
+}

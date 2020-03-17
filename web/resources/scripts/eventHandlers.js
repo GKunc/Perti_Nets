@@ -1,61 +1,30 @@
 function moveEventHandler() {
-    $('.shape').off('mousedown');
-    $('.shape').on('mousedown', function() {
+    let shape = $('.shape');
+    shape.off('mousedown');
+    shape.on('mousedown', function() {
         let arrows = Array.from(document.getElementsByClassName("arrow"));
         let arrowsIds = [];
         let startOfArrow = [];
         let endOfArrow = [];
-        let foundId;
         let offsetX, offsetY;
 
         let id = $(this).attr("id");
-
-        arrows.forEach(element => {
-            arrowsIds.push(element.getAttribute("id"));
-            startOfArrow.push(element.getAttribute("id").split(";")[0]);
-            endOfArrow.push(element.getAttribute("id").split(";")[1]);
-        });
-
-        $(this).addClass('active');
         let movedElement = $(this);
 
-        $(this).parents().on('mousemove', function(e) {
+        splitArrowToStartAndEnd(arrows, arrowsIds, startOfArrow, endOfArrow);
+
+        $(this).addClass('active');
+
+        $(this).parents().on('mousemove', function(event) {
             if($(movedElement).hasClass("circle")) {
-                offsetX = 15;
-                offsetY = 15;
-                $(".active").attr("cx", e.pageX - 150);
-                $(".active").attr("cy", e.pageY);
+                [offsetX, offsetY] = movePlace(event);
             } else if($(movedElement).hasClass("square")) {
-                offsetX = 35;
-                offsetY = 10;
-                $(".active").attr("x", e.pageX - 150);
-                $(".active").attr("y", e.pageY - 10);
+                [offsetX, offsetY] = moveTransition(event);
             }
-
-            let startIndex = startOfArrow.indexOf(id.toString());
-            let endIndex = endOfArrow.indexOf(id.toString());
-
-            if (startIndex !== -1) {
-                arrowsIds.forEach(arrowId => {
-                    if(arrowId.split(";")[0] == id) {
-                        foundId = arrowId;
-                        $(document.getElementById(arrowId)).attr("x1", e.pageX - 160 + offsetX);
-                        $(document.getElementById(arrowId)).attr("y1", e.pageY - 10 + offsetY);
-                    }
-                });
-            }
-            if (endIndex !== -1) {
-                arrowsIds.forEach(arrowId => {
-                    if(arrowId.split(";")[1] == id) {
-                        foundId = arrowId;
-                        $(document.getElementById(arrowId)).attr("x2", e.pageX - 160 + offsetX);
-                        $(document.getElementById(arrowId)).attr("y2", e.pageY - 10 + offsetY);
-                    }
-                });
-            }
+            moveArrow(event, arrowsIds, id, offsetX, offsetY);
         });
 
-        $(this).on("mouseup", function (e) {
+        $(this).on("mouseup", function() {
             $(this).parents().off('mousemove');
             $(this).removeClass("active");
         });
@@ -63,33 +32,48 @@ function moveEventHandler() {
     });
 }
 
+function movePlace(event) {
+    let active = $(".active");
+    let offsetX = place_radius / 2;
+    let offsetY = place_radius / 2;
+    active.attr("cx", event.pageX - 150);
+    active.attr("cy", event.pageY);
+
+    return [offsetX, offsetY];
+}
+
+function moveTransition(event) {
+    let active = $(".active");
+    let offsetX = transition_width / 2;
+    let offsetY = transition_height / 2;
+    active.attr("x", event.pageX - 150);
+    active.attr("y", event.pageY - 10);
+
+    return [offsetX, offsetY];
+}
+
+function moveArrow(event, arrows, id, offsetX, offsetY) {
+    arrows.forEach(arrowId => {
+        let placeAndTransition = arrowId.split(";");
+        if(placeAndTransition[0] === id) {
+            $(document.getElementById(arrowId)).attr("x1", event.pageX - 160 + offsetX);
+            $(document.getElementById(arrowId)).attr("y1", event.pageY - 10 + offsetY);
+        } else if(placeAndTransition[1] === id) {
+            $(document.getElementById(arrowId)).attr("x2", event.pageX - 160 + offsetX);
+            $(document.getElementById(arrowId)).attr("y2", event.pageY - 10 + offsetY);
+        }
+    });
+}
+
 function selectEventHandler() {
-    let clickedElement = document.querySelector('.board');
-    $('.shape').off('dblclick');
-    $('.shape').on('dblclick', function() {
+    let shape =  $('.shape');
+    shape.off('dblclick');
+    shape.on('dblclick', function() {
         let id = $(this).attr('id');
+
         $(this).parents().on("keypress", function(event) {
-            if(event.which == 8 && $(document.getElementById(id)).hasClass("selected")) {
-                if($(document.getElementById(id)).hasClass("arrow")) {
-                    let splitedID = id.toString().split(";");
-                    let groupId = 0;
-                    let elementId = 0;
-                    splitedID.forEach(id => {
-                        if(id.includes("p")) {
-                            elementId = parseInt(id.substr(1));
-                        } else if(id.includes("t")) {
-                            groupId = parseInt(id.substr(1));
-                        }
-                    })
-                    netMatrix[groupId][elementId] = 0;
-                    console.log(netMatrix);
-                }
-
-                clickedElement.removeChild($(document.getElementById(id))[0]);
-                clearList(selectedElements);
-            }
+            deleteElement(event, id);
         });
-
 
         if($(this).hasClass("selected")) {
             removeElementById(selectedElements, id);
@@ -103,9 +87,21 @@ function selectEventHandler() {
     });
 }
 
+function deleteElement(event, id) {
+    let documentElement = document.querySelector('.board');
+    if(event.which === 8 && $(document.getElementById(id)).hasClass("selected")) {
+        if($(document.getElementById(id)).hasClass("arrow")) {
+            let placeAndTransitionId = id.toString().split(";");
+            let [groupId, elementId] = splitArrowId(placeAndTransitionId);
+            netMatrix[groupId][elementId] = 0;
+        }
+        documentElement.removeChild($(document.getElementById(id))[0]);
+        clearList(selectedElements);
+    }
+}
+
 function addTokenEventHandler() {
     $('.circle').on('dblclick', function() {
-
         let x = $(this).attr('cx');
         let y = $(this).attr('cy');
         let id = $(this).attr('id');
@@ -115,9 +111,9 @@ function addTokenEventHandler() {
             addTokenToPlace(id + 'token', x, y);
             tokens.push(tokenId);
         } else {
-            let clickedElement = document.querySelector('.board');
+            let documentElement = document.querySelector('.board');
             let elementToRemove = document.getElementById(tokenId);
-            clickedElement.removeChild(elementToRemove);
+            documentElement.removeChild(elementToRemove);
             removeElementById(tokens, tokenId)
         }
     });
