@@ -7,8 +7,6 @@ function connect() {
         [x2, y2] = getCoordinates(secondItem, 1);
         addArrow(selectedElements[0], x1, y1, selectedElements[1], x2, y2);
 
-        // set netMatrix to include connection
-        // todo
         let groupId, elementId;
 
         if(firstItem.classList.contains("square")) {

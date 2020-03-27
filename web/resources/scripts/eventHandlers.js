@@ -105,16 +105,40 @@ function addTokenEventHandler() {
         let x = $(this).attr('cx');
         let y = $(this).attr('cy');
         let id = $(this).attr('id');
-        let tokenId = id + 'token';
+        let tokenId = id.toString().substr(1,1) + 'token';
 
         if(tokens.indexOf(tokenId) === -1) {
-            addTokenToPlace(id + 'token', x, y);
+            addTokenToPlace(tokenId, x, y);
             tokens.push(tokenId);
         } else {
-            let documentElement = document.querySelector('.board');
-            let elementToRemove = document.getElementById(tokenId);
-            documentElement.removeChild(elementToRemove);
-            removeElementById(tokens, tokenId)
+            removeTokenFromPlace(tokenId);
+        }
+    });
+}
+
+function moveTokenEventHandler() {
+    // todo dodac warunek ze wszystkie miejsca musza miec tokeny
+    $('.square').on('dblclick', function () {
+        let transitionId = $(this).attr('id').toString().substr(1,1);
+        if(validateTransition(transitionId)) {
+            for (let i = 0; i < netMatrix[transitionId].length; i++) {
+                let place = netMatrix[transitionId][i];
+                let placeId = document.getElementById('p' + i).getAttribute('id');
+                let tokenId = i + 'token';
+
+                if (place === 1) {
+                    if (tokens.indexOf(tokenId) === -1) {
+                        let x = document.getElementById(placeId).getAttribute('cx');
+                        let y = document.getElementById(placeId).getAttribute('cy');
+                        addTokenToPlace(tokenId, x, y);
+                        tokens.push(tokenId);
+                    }
+                } else if (place === -1) {
+                    removeTokenFromPlace(tokenId);
+                }
+            }
+        } else {
+            alert('Nie wszystkie miejsca posiadają tokeny!');
         }
     });
 }

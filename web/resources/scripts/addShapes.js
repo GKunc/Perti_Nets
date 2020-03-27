@@ -68,3 +68,10 @@ function addTokenToPlace(id, x, y) {
     token.setAttribute("fill", "black");
     $(".board").append(token);
 }
+
+function removeTokenFromPlace(id) {
+    let documentElement = document.querySelector('.board');
+    let elementToRemove = document.getElementById(id);
+    documentElement.removeChild(elementToRemove);
+    removeElementById(tokens, id)
+}

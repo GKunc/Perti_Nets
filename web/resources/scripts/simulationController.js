@@ -1,11 +1,9 @@
 function build() {
+    console.log("Build");
+
     $('.shape').off();
 
-    for(let i=0; i<selectedElements.length; i++) {
-        let elementId = selectedElements[i];
-        document.getElementById(elementId).classList.remove("selected");
-        document.getElementById(elementId).setAttribute("stroke", "black");
-    }
+    unselectAll();
     clearList(selectedElements);
     addTokenEventHandler();
 
@@ -14,8 +12,14 @@ function build() {
 
 function start() {
     console.log("Start");
+
+    $('.shape').off();
+    unselectAll();
+    clearList(selectedElements);
+
+    moveTokenEventHandler();
 }
 
 function stop() {
-    console.log("Start");
+    console.log("Stop");
 }

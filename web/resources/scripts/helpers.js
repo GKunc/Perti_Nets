@@ -60,3 +60,24 @@ function splitArrowId(placeAndTransitionId) {
     });
     return [groupId, elementId];
 }
+
+function unselectAll() {
+    for(let i=0; i<selectedElements.length; i++) {
+        let elementId = selectedElements[i];
+        document.getElementById(elementId).classList.remove("selected");
+        document.getElementById(elementId).setAttribute("stroke", "black");
+    }
+}
+
+function validateTransition(transitionId) {
+    for(let i=0; i < netMatrix[transitionId].length; i++) {
+        let place = netMatrix[transitionId][i];
+        if(place === -1) {
+            let token = document.getElementById(i + 'token');
+            if(typeof(token) == 'undefined' || token == null) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
