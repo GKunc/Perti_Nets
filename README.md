@@ -1,4 +1,4 @@
-# Perti_Nets
+# Petri_Nets
 
 CPN Tools: http://cpntools.org/
 
