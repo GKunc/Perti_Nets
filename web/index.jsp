@@ -30,7 +30,8 @@
     <div class="button-container">
         <button class="btn-build" onclick="build()"></button>
         <button class="btn btn-start" onclick="start()"></button>
-        <button class="btn btn-stop" onclick="stop()"></button>
+        <button class="btn btn-simplify" onclick="minimizeNet()"></button>
+        <%--  call java ee function to redirect to new servlet with netMatrix --%>
         <button class="btn-square" onclick="addTransition()" value="square"></button>
         <button class="btn-circle" onclick="addPlace()" value="circle"></button>
         <button class="btn-arrow" onclick="connect()" value="arrow"></button>

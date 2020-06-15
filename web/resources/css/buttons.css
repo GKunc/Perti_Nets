@@ -30,9 +30,10 @@
     border-radius: 100%;
 }
 
-.btn-stop {
+.btn-simplify {
     margin-top: 20px;
-    background-image: url("../images/stop.png");
+    background-image: url("../images/simplyfy.png");
+    background-color: darkred;
     background-size: cover;
     border-radius: 100%;
 }
