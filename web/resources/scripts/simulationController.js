@@ -20,38 +20,28 @@ function start() {
     moveTokenEventHandler();
 }
 
-function columnsToDelete(start) {
-    let columnsToDelete = [];
-
-    for(let i=1;i<netMatrix[0].length-1;i++) {
-        if(netMatrix[start][i] === 0) { // init zeros
-            columnsToDelete.push(i);
-        }
-    }
-
-    for(let i=start; i<netMatrix.length-2; i++) {
-        for (let j=1; j<netMatrix[0].length-1; j++) {
-            if(netMatrix[i][j] !== 0 && columnsToDelete.includes(j)) {
-                columnsToDelete.splice(columnsToDelete.indexOf(j), 1); // delete when some column has value other than 0
-            }
-        }
-    }
-
-    console.log(columnsToDelete);
-    return columnsToDelete;
-}
-
 function minimizeNet() {
     console.log("Minimize");
 
-    let w = window.open('minimizedNet.jsp', '_blank', 'toolbar=0,location=0,menubar=0');
+    // let w = window.open('minimizedNet.jsp', '_blank', 'toolbar=0,location=0,menubar=0');
 
     let {start, end} = findStartAndEnd();
-    // minimize net
-    w.netModel = minimizeMatrix(start, end);
+    // minimize main net
+    let mainMinimizedMatrix = minimizeMainMatrix(start, end);
 
+    // minimize subnets
+    let subnets = [];
+    let places = findPlacesStart(start);
+    for(let i=0; i<places.length;i++) {
+        subnets.push(createSubnet(findTransitionStart(places[i]), places[i]));
+    }
+
+    console.log("Main minimized matrix:");
+    console.log(mainMinimizedMatrix);
+    console.log("Subnets Matrix:");
+    console.log(subnets);
     //get subnets
-    subnet1 = netMatrix
+
     // todo
     /*
         Jeżeli do tranzycji idzie jedno miejsce i z tranzycji wychodzi jedne misjce to zredukowac do jedengo miejsca
@@ -61,6 +51,56 @@ function minimizeNet() {
         Potem odpowiednio polaczyc
      */
 }
+
+function minimizeMainMatrix(start, end) {
+    var minimizedNetFirst = [];
+    var minimizedNetFinal = [];
+    minimizedNetFirst.push(netMatrix[start]);
+    minimizedNetFirst.push(netMatrix[end]);
+
+    for(let i=0;i<minimizedNetFirst.length;i++) {
+        var row = [];
+        for (let j=0; j<minimizedNetFirst[0].length; j++) {
+            if(minimizedNetFirst[i][j] !== 0) {
+                row.push(minimizedNetFirst[i][j]);
+            }
+            else if ( minimizedNetFirst[i][j] === 0 &&
+                (j === 0 || j === minimizedNetFirst[0].length-1) ) {
+                row.push(0);
+            }
+        }
+        minimizedNetFinal.push(row);
+    }
+    return minimizedNetFinal;
+}
+
+function createSubnet(startPlace, startTransition) {
+    let subnetFinal = [];
+    let rowsInSubnet = findNextValue(startTransition, []);
+    let subnet = subnetMatrix(rowsInSubnet);
+
+    let columns = columnsToDelete(startPlace, rowsInSubnet);
+
+    console.log("Rows to be saved: ");
+    console.log(rowsInSubnet);
+
+    console.log("Columns to delete: ");
+    console.log(columns);
+
+    for (let i = 0; i < subnet.length; i++) {
+        let rowFinal = [];
+        for (let j = 0; j < subnet[0].length; j++) {
+            if(!columns.includes(j)) {
+                rowFinal.push(subnet[i][j]);
+            }
+        }
+        subnetFinal.push(rowFinal);
+    }
+    console.log("Final subnet: ");
+    console.log(subnetFinal);
+    return subnetFinal;
+}
+
 function subnetMatrix(rows) {
     let result = [];
     for (let i = 0; i < netMatrix.length; i++) {
@@ -68,12 +108,33 @@ function subnetMatrix(rows) {
             result.push(netMatrix[i]);
         }
     }
+    console.log("Subnet Matrix: ");
+    console.log(result);
     return result;
 }
 
+function findPlacesStart(row) {
+    let placesStarts = [];
+    for(let i=0; i<netMatrix[0].length;i++) {
+        if(netMatrix[row][i] === 1) {
+            placesStarts.push(i);
+        }
+    }
+    return placesStarts;
+}
+
+function findTransitionStart(column) {
+    for(let i = 0; i<netMatrix.length; i++) {
+        if (netMatrix[i][column] === -1) {
+            return i;
+        }
+    }
+}
+
 function findNextValue(currentColumn, rows) {
-    if(currentColumn === netMatrix[0].length - 1)
+    if(currentColumn === netMatrix[0].length) {
         return rows;
+    }
 
     for(let i = 1; i<netMatrix.length-1; i++) {
         if (netMatrix[i][currentColumn] === -1) {
@@ -88,26 +149,26 @@ function findNextValue(currentColumn, rows) {
     return rows;
 }
 
-function createSubnet(start) {
-    let subnetFinal = [];
-    let rowsInSubnet = findNextValue(start, []);
-    let subnet = subnetMatrix(rowsInSubnet);
+function columnsToDelete(start, rows) {
+    let columnsToDelete = [];
 
-    let columns = columnsToDelete(start);
-    columns.push(0);
-    columns.push(netMatrix.length);
-    console.log(columns)
-    for (let i = 0; i < subnet.length; i++) {
-        let rowFinal = [];
-        for (let j = 0; j < subnet[0].length; j++) {
-            if(!columns.includes(j)) {
-                rowFinal.push(subnet[i][j]);
-                console.log(j)
+    for(let i=0;i<netMatrix[0].length;i++) {
+        // init zeros
+        if(netMatrix[start][i] === 0) {
+            columnsToDelete.push(i);
+        }
+    }
+
+    rows.forEach(row => {
+        for(let i = 1; i<netMatrix[0].length; i++) {
+            if(netMatrix[row][i] !== 0 && columnsToDelete.includes(i)) {
+                // delete when some column has value other than 0
+                columnsToDelete.splice(columnsToDelete.indexOf(i), 1);
             }
         }
-        subnetFinal.push(rowFinal);
-    }
-    console.log(subnetFinal);
+    });
+
+    return columnsToDelete;
 }
 
 function findStartAndEnd() {
@@ -134,25 +195,3 @@ function findStartAndEnd() {
     return {start, end};
 }
 
-function minimizeMatrix(start, end) {
-    var minimizedNetFirst = [];
-    var minimizedNetFinal = [];
-    minimizedNetFirst.push(netMatrix[start]);
-    minimizedNetFirst.push(netMatrix[end]);
-
-    for(let i=0;i<minimizedNetFirst.length;i++) {
-        var row = []
-        for (let j=0; j<minimizedNetFirst[0].length; j++) {
-            if(minimizedNetFirst[i][j] !== 0) {
-                row.push(minimizedNetFirst[i][j]);
-            }
-            else if ( minimizedNetFirst[i][j] === 0 &&
-                      (j === 0 || j === minimizedNetFirst[0].length-1) ) {
-                row.push(0);
-            }
-        }
-        minimizedNetFinal.push(row);
-    }
-    return minimizedNetFinal;
-
-}
