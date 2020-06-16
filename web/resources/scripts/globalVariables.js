@@ -6,7 +6,7 @@ let currentPlaceId = 0;
 let selectedElements = [];
 let tokens = [];
 
-const place_radius = 15;
+const place_radius = 30;
 
 const transition_height = 20;
 const transition_width = 70;

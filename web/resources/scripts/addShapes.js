@@ -5,8 +5,8 @@ function addTransition(x = 50, y = 50) {
     square.setAttribute("class", "shape square");
     square.setAttribute("x", x.toString());
     square.setAttribute("y", y.toString());
-    square.setAttribute("width", "70");
-    square.setAttribute("height", "20");
+    square.setAttribute("width", transition_width);
+    square.setAttribute("height", transition_height);
 
     $(".board").append(square);
     selectEventHandler();
@@ -21,7 +21,7 @@ function addTransition(x = 50, y = 50) {
     netMatrix.push(newTransition);
 }
 
-function addPlace(x = 50, y = 50, r = 30, color = "white") {
+function addPlace(x = 50, y = 50, r = place_radius, color = "white") {
     let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     let id = setPlaceId();
     circle.setAttribute("id", "p" + id);
@@ -63,7 +63,7 @@ function addTokenToPlace(id, x, y) {
     token.setAttribute("class", "shape token");
     token.setAttribute("cx", x.toString());
     token.setAttribute("cy", y.toString());
-    token.setAttribute("r", "10");
+    token.setAttribute("r", "5");
     token.setAttribute("stroke", "black");
     token.setAttribute("fill", "black");
     $(".board").append(token);

@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html>
   <head>
@@ -31,6 +30,7 @@
         <button class="btn-build" onclick="build()"></button>
         <button class="btn btn-start" onclick="start()"></button>
         <button class="btn btn-simplify" onclick="minimizeNet()"></button>
+
         <%--  call java ee function to redirect to new servlet with netMatrix --%>
         <button class="btn-square" onclick="addTransition()" value="square"></button>
         <button class="btn-circle" onclick="addPlace()" value="circle"></button>
@@ -38,7 +38,7 @@
     </div>
 
     <div class="board-container">
-      <svg class="board" width="100%" height="100%">
+      <svg class="board">
         <defs>
           <marker id="arrow" markerWidth="13" markerHeight="13" refx="2" refy="6" orient="auto">
             <path d="M2,1 L2,10 L10,6 L2,2" style="fill:black;" />
