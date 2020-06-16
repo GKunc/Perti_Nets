@@ -1,4 +1,7 @@
 let netMatrix = [];
+let mainMinimizedMatrix = [];
+let subnetsMatrixes = [];
+
 let placesCounter = 0;
 
 let currentTransitionId = 0;

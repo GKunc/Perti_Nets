@@ -37,7 +37,6 @@
     </svg>
 </div>
 <script type="text/javascript">
-    console.log(netMatrix);
     initMinimizedNet();
 </script>
 </body>

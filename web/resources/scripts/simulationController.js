@@ -23,23 +23,24 @@ function start() {
 function minimizeNet() {
     console.log("Minimize");
 
-    // let w = window.open('minimizedNet.jsp', '_blank', 'toolbar=0,location=0,menubar=0');
-
     let {start, end} = findStartAndEnd();
     // minimize main net
-    let mainMinimizedMatrix = minimizeMainMatrix(start, end);
+    mainMinimizedMatrix = minimizeMainMatrix(start, end);
 
     // minimize subnets
-    let subnets = [];
     let places = findPlacesStart(start);
     for(let i=0; i<places.length;i++) {
-        subnets.push(createSubnet(findTransitionStart(places[i]), places[i]));
+        subnetsMatrixes.push(createSubnet(findTransitionStart(places[i]), places[i]));
     }
 
-    console.log("Main minimized matrix:");
-    console.log(mainMinimizedMatrix);
-    console.log("Subnets Matrix:");
-    console.log(subnets);
+    let w = window.open('minimizedNet.jsp', '_blank', 'toolbar=0,location=0,menubar=0');
+    w.mainMinimizedMatrix = mainMinimizedMatrix;
+    w.subnetsMatrixes = subnetsMatrixes;
+
+    // console.log("Main minimized matrix:");
+    // console.log(mainMinimizedMatrix);
+    // console.log("Subnets Matrix:");
+    // console.log(subnetsMatrixes);
     //get subnets
 
     // todo
@@ -47,7 +48,7 @@ function minimizeNet() {
         Jeżeli do tranzycji idzie jedno miejsce i z tranzycji wychodzi jedne misjce to zredukowac do jedengo miejsca
         Jeżeli jest petla to zastepujemy ja jednym miejscem
 
-        Zrobic najpier odpowiednie miejsca i tranzycje
+        Zrobic najpierw odpowiednie miejsca i tranzycje
         Potem odpowiednio polaczyc
      */
 }
