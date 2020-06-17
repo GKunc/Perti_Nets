@@ -66,6 +66,16 @@ function moveArrow(event, arrows, id, offsetX, offsetY) {
     });
 }
 
+function runTransitionEventHandler() {
+    let transition =  $('.square');
+    transition.off();
+
+    transition.on('dblclick', function() {
+        alert("Transition run")
+        let id = $(this).attr('id');
+    });
+}
+
 function selectEventHandler() {
     let shape =  $('.shape');
     shape.off('dblclick');

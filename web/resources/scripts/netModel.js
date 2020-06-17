@@ -5,7 +5,7 @@ function connect() {
         let secondItem = document.getElementById(selectedElements[1]);
         [x1, y1] = getCoordinates(firstItem, 0);
         [x2, y2] = getCoordinates(secondItem, 1);
-        addArrow(selectedElements[0], x1, y1, selectedElements[1], x2, y2);
+        addArrow(selectedElements[0], x1, y1, selectedElements[1], x2, y2-5);
 
         let groupId, elementId;
 

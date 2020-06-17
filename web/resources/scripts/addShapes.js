@@ -72,7 +72,7 @@ function addTokenToPlace(id, x, y) {
     token.setAttribute("class", "shape token");
     token.setAttribute("cx", x.toString());
     token.setAttribute("cy", y.toString());
-    token.setAttribute("r", "5");
+    token.setAttribute("r", "10");
     token.setAttribute("stroke", "black");
     token.setAttribute("fill", "black");
     $(".board").append(token);
