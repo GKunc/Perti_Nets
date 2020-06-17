@@ -1,4 +1,4 @@
-function addTransition(x = 50, y = 50) {
+function addTransition(x = 50, y = 50, minimized = false) {
     let square = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     let id = setTransitionId();
     square.setAttribute("id", "t" + id);
@@ -9,8 +9,12 @@ function addTransition(x = 50, y = 50) {
     square.setAttribute("height", transition_height);
 
     $(".board").append(square);
+    if(minimized) {
+        moveEventHandler(0);
+    } else {
+        moveEventHandler();
+    }
     selectEventHandler();
-    moveEventHandler();
 
     let newTransition = [];
     if(placesCounter !== 0) {
@@ -21,9 +25,11 @@ function addTransition(x = 50, y = 50) {
     netMatrix.push(newTransition);
 }
 
-function addPlace(x = 50, y = 50, r = place_radius, color = "white") {
+function addPlace(id = -1, x = 50, y = 50, minimized = false, r = place_radius, color = "white") {
     let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    let id = setPlaceId();
+    if(id === -1) {
+        id = setPlaceId();
+    }
     circle.setAttribute("id", "p" + id);
     circle.setAttribute("class", "shape circle");
     circle.setAttribute("cx", x.toString());
@@ -34,8 +40,11 @@ function addPlace(x = 50, y = 50, r = place_radius, color = "white") {
 
     $(".board").append(circle);
     selectEventHandler();
-    moveEventHandler();
-
+    if(minimized) {
+        moveEventHandler(0);
+    } else {
+        moveEventHandler();
+    }
     placesCounter++;
     for(let i=0; i<netMatrix.length; i++) {
         netMatrix[i].push(0);

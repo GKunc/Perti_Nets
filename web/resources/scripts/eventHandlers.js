@@ -1,7 +1,8 @@
-function moveEventHandler() {
+function moveEventHandler(offset = 100) {
     let shape = $('.shape');
     shape.off('mousedown');
     shape.on('mousedown', function() {
+        console.log("MOVE");
         let arrows = Array.from(document.getElementsByClassName("arrow"));
         let arrowsIds = [];
         let startOfArrow = [];
@@ -17,11 +18,11 @@ function moveEventHandler() {
 
         $(this).parents().on('mousemove', function(event) {
             if($(movedElement).hasClass("circle")) {
-                [offsetX, offsetY] = movePlace(event);
+                [offsetX, offsetY] = movePlace(event, offset);
             } else if($(movedElement).hasClass("square")) {
-                [offsetX, offsetY] = moveTransition(event);
+                [offsetX, offsetY] = moveTransition(event, offset + 40);
             }
-            moveArrow(event, arrowsIds, id, offsetX, offsetY);
+            moveArrow(event, arrowsIds, id, offsetX + 30, offsetY);
         });
 
         $(this).on("mouseup", function() {
@@ -32,21 +33,21 @@ function moveEventHandler() {
     });
 }
 
-function movePlace(event) {
+function movePlace(event, offset) {
     let active = $(".active");
     let offsetX = place_radius / 2;
     let offsetY = place_radius / 2;
-    active.attr("cx", event.pageX - 150);
+    active.attr("cx", event.pageX - offset);
     active.attr("cy", event.pageY);
 
     return [offsetX, offsetY];
 }
 
-function moveTransition(event) {
+function moveTransition(event, offset) {
     let active = $(".active");
     let offsetX = transition_width / 2;
     let offsetY = transition_height / 2;
-    active.attr("x", event.pageX - 150);
+    active.attr("x", event.pageX - offset);
     active.attr("y", event.pageY - 10);
 
     return [offsetX, offsetY];
@@ -119,17 +120,20 @@ function addTokenEventHandler() {
     });
 }
 
-function moveTokenEventHandler() {
-    // todo dodac warunek ze wszystkie miejsca musza miec tokeny
+function moveTokenEventHandler(netMatrix) {
     const square =  $('.square');
     square.off('dblclick');
     square.on('dblclick', function () {
         let transitionId = $(this).attr('id').toString().substr(1,1);
+        console.log("Transition: " + transitionId);
         if(validateTransition(transitionId)) {
+
             for (let i = 0; i < netMatrix[transitionId].length; i++) {
                 let place = netMatrix[transitionId][i];
                 let placeId = document.getElementById('p' + i).getAttribute('id');
                 let tokenId = i + 'token';
+
+                console.log("Pass Token: " + place);
 
                 if (place === 1) {
                     if (tokens.indexOf(tokenId) === -1) {

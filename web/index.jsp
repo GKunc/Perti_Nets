@@ -28,7 +28,7 @@
   <body>
     <div class="button-container">
         <button class="btn-build" onclick="build()"></button>
-        <button class="btn btn-start" onclick="start()"></button>
+        <button class="btn btn-start" onclick="start(netMatrix)"></button>
         <button class="btn btn-simplify" onclick="minimizeNet()"></button>
 
         <%--  call java ee function to redirect to new servlet with netMatrix --%>

@@ -10,14 +10,14 @@ function build() {
     console.log(netMatrix)
 }
 
-function start() {
+function start(netMatrix) {
     console.log("Start");
 
     $('.shape').off();
     unselectAll();
     clearList(selectedElements);
 
-    moveTokenEventHandler();
+    moveTokenEventHandler(netMatrix);
 }
 
 function minimizeNet() {
@@ -30,17 +30,17 @@ function minimizeNet() {
     // minimize subnets
     let places = findPlacesStart(start);
     for(let i=0; i<places.length;i++) {
-        subnetsMatrixes.push(createSubnet(findTransitionStart(places[i]), places[i]));
+        subnetsMatrixes.push(createSubnet(findTransitionStart(places[i]), places[i], end));
     }
 
     let w = window.open('minimizedNet.jsp', '_blank', 'toolbar=0,location=0,menubar=0');
     w.mainMinimizedMatrix = mainMinimizedMatrix;
     w.subnetsMatrixes = subnetsMatrixes;
 
-    // console.log("Main minimized matrix:");
-    // console.log(mainMinimizedMatrix);
-    // console.log("Subnets Matrix:");
-    // console.log(subnetsMatrixes);
+    console.log("Main minimized matrix:");
+    console.log(mainMinimizedMatrix);
+    console.log("Subnets Matrix:");
+    console.log(subnetsMatrixes);
     //get subnets
 
     // todo
@@ -54,20 +54,45 @@ function minimizeNet() {
 }
 
 function minimizeMainMatrix(start, end) {
-    var minimizedNetFirst = [];
-    var minimizedNetFinal = [];
-    minimizedNetFirst.push(netMatrix[start]);
-    minimizedNetFirst.push(netMatrix[end]);
+    let minimizedNetFirst = [];
+    let minimizedNetFinal = [];
+    for(let i=0; i<=start; i++) {
+        minimizedNetFirst.push(netMatrix[i]);
+    }
+
+    for(let i=end; i<netMatrix.length; i++) {
+        minimizedNetFirst.push(netMatrix[i]);
+    }
+
+
+    let rowOfOnes = findRowOfDoubles(minimizedNetFirst, 1);
+    let rowOfNegativeOnes = findRowOfDoubles(minimizedNetFirst, -1);
+
+    let indexesOfOnes = findIndexesOfDoubles(minimizedNetFirst, 1);
+    let indexesOfZeros = findIndexesOfDoubles(minimizedNetFirst, 0);
+    for(let i=0; i<minimizedNetFirst[rowOfNegativeOnes].length; i++) {
+        if(minimizedNetFirst[rowOfNegativeOnes][i] === 1 && indexesOfZeros.includes(i)) {
+            indexesOfZeros.splice(indexesOfZeros.indexOf(i), 1);
+        }
+    }
 
     for(let i=0;i<minimizedNetFirst.length;i++) {
-        var row = [];
+        let row = [];
         for (let j=0; j<minimizedNetFirst[0].length; j++) {
-            if(minimizedNetFirst[i][j] !== 0) {
-                row.push(minimizedNetFirst[i][j]);
+            if(indexesOfOnes.includes(j)) {
+                if(i === rowOfOnes) {
+                    row.push(1);
+                } else if(i === rowOfNegativeOnes) {
+                    row.push(-1);
+                } else {
+                    row.push(0);
+                }
             }
-            else if ( minimizedNetFirst[i][j] === 0 &&
-                (j === 0 || j === minimizedNetFirst[0].length-1) ) {
-                row.push(0);
+            else if(indexesOfZeros.includes(j)) {
+                continue;
+            }
+            else {
+                row.push(minimizedNetFirst[i][j]);
             }
         }
         minimizedNetFinal.push(row);
@@ -75,19 +100,15 @@ function minimizeMainMatrix(start, end) {
     return minimizedNetFinal;
 }
 
-function createSubnet(startPlace, startTransition) {
+function createSubnet(startPlace, startTransition, end) {
     let subnetFinal = [];
-    let rowsInSubnet = findNextValue(startTransition, []);
+    let rowsInSubnet = findNextValue(startTransition, [], end); // ok
     let subnet = subnetMatrix(rowsInSubnet);
-
-    let columns = columnsToDelete(startPlace, rowsInSubnet);
-
-    console.log("Rows to be saved: ");
+    console.log("rowsInSubnet");
     console.log(rowsInSubnet);
-
-    console.log("Columns to delete: ");
+    let columns = columnsToDelete(startPlace, rowsInSubnet);
+    console.log("columns");
     console.log(columns);
-
     for (let i = 0; i < subnet.length; i++) {
         let rowFinal = [];
         for (let j = 0; j < subnet[0].length; j++) {
@@ -97,8 +118,7 @@ function createSubnet(startPlace, startTransition) {
         }
         subnetFinal.push(rowFinal);
     }
-    console.log("Final subnet: ");
-    console.log(subnetFinal);
+
     return subnetFinal;
 }
 
@@ -109,8 +129,6 @@ function subnetMatrix(rows) {
             result.push(netMatrix[i]);
         }
     }
-    console.log("Subnet Matrix: ");
-    console.log(result);
     return result;
 }
 
@@ -132,17 +150,17 @@ function findTransitionStart(column) {
     }
 }
 
-function findNextValue(currentColumn, rows) {
+function findNextValue(currentColumn, rows, end) {
     if(currentColumn === netMatrix[0].length) {
         return rows;
     }
 
-    for(let i = 1; i<netMatrix.length-1; i++) {
+    for(let i = 0; i<end; i++) {
         if (netMatrix[i][currentColumn] === -1) {
             for (let j = 1; j < netMatrix[0].length - 1; j++) {
                 if (netMatrix[i][j] === 1) {
                     rows.push(i);
-                    findNextValue(j, rows);
+                    findNextValue(j, rows, end);
                 }
             }
         }
@@ -193,6 +211,37 @@ function findStartAndEnd() {
             }
         }
     }
+
     return {start, end};
 }
 
+function findRowOfDoubles(minimizedNetFirst, number) {
+    let row = -1;
+    for(let i=0;i<minimizedNetFirst.length;i++) {
+        let countOnes = 0;
+        for (let j=0; j<minimizedNetFirst[0].length; j++) {
+            if(minimizedNetFirst[i][j] === number) {
+                countOnes += 1;
+            }
+            if(countOnes >= 2) {
+                row = i;
+            }
+        }
+    }
+    return row;
+}
+
+function findIndexesOfDoubles(minimizedNetFirst, number) {
+    let indexes = [];
+    let row = findRowOfDoubles(minimizedNetFirst, number);
+    if(number === 0) {
+        row = findRowOfDoubles(minimizedNetFirst, 1);
+    }
+    // without first and last element
+    for(let i=1;i<minimizedNetFirst[row].length-1;i++) {
+        if(minimizedNetFirst[row][i] === number) {
+            indexes.push(i);
+        }
+    }
+    return indexes;
+}

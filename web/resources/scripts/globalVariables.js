@@ -3,6 +3,9 @@ let mainMinimizedMatrix = [];
 let subnetsMatrixes = [];
 
 let placesCounter = 0;
+let mainPlaces = 0;
+let subnetPlaces1 = 0;
+let subnetPlaces2 = 0;
 
 let currentTransitionId = 0;
 let currentPlaceId = 0;
