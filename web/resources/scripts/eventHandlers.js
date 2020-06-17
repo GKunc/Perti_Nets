@@ -66,13 +66,55 @@ function moveArrow(event, arrows, id, offsetX, offsetY) {
     });
 }
 
-function runTransitionEventHandler() {
+function runTransitionEventHandler(mainMatrix, subnetsMatrixes) {
     let transition =  $('.square');
     transition.off();
 
     transition.on('dblclick', function() {
-        alert("Transition run")
-        let id = $(this).attr('id');
+        const square =  $('.square');
+        let subnetPlaces = findIndexesOfDoubles(mainMatrix, 1);
+
+        let transitionId = $(this).attr('id').toString().substr(1,1);
+        if(validateTransition(mainMatrix, transitionId)) {
+            for (let i = 0; i < mainMatrix[transitionId].length; i++) {
+                let placeValue = mainMatrix[transitionId][i];
+                let placeId = "p" + i;
+                let tokenId = i + 'token';
+
+                if(subnetPlaces.includes(i)) {
+                    let subnetId = subnetPlaces.indexOf(i);
+                    console.log("SUBNETID: " + subnetId)
+                    placeId = "subnetMain" + subnetId + "p" + i;
+                    let subnetTokenId = "subnet" + i + 'token';
+                    let subnetFirstElementId = "subnet" + subnetId + "p0";
+                    console.log("PlaceId " + placeId);
+                    let x = document.getElementById(placeId).getAttribute('cx');
+                    let y = document.getElementById(placeId).getAttribute('cy');
+                    addTokenToPlace(tokenId, x, y);
+
+                    console.log("SUBNET " + subnetFirstElementId);
+                    x = document.getElementById(subnetFirstElementId).getAttribute('cx');
+                    y = document.getElementById(subnetFirstElementId).getAttribute('cy');
+                    addTokenToPlace(subnetTokenId, x, y);
+
+                    tokens.push(tokenId);
+                }
+
+
+                if (placeValue === 1) {
+                    if (tokens.indexOf(tokenId) === -1) {
+                        let x = document.getElementById(placeId).getAttribute('cx');
+                        let y = document.getElementById(placeId).getAttribute('cy');
+                        addTokenToPlace(tokenId, x, y);
+                        tokens.push(tokenId);
+                    }
+                } else if (placeValue === -1) {
+                    removeTokenFromPlace(tokenId);
+                }
+            }
+        } else {
+            alert('Nie wszystkie miejsca posiadają tokeny!');
+        }
     });
 }
 

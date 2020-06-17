@@ -9,13 +9,14 @@ function initMinimizedNet() {
     mainMatrix(main, subnetColors);
     for(let i=0; i<subnet.length; i++) {
         subnetMatrix(subnet, i, subnetColors);
+        subnetCompleted.push(0);
     }
 
-    simulateMinimized();
+    simulateMinimized(main, subnet);
 }
 
-function simulateMinimized() {
-
+function simulateMinimized(main, subnet) {
+    runTransitionEventHandler(main, subnet);
 }
 
 function mainMatrix(main, subnetColors) {
