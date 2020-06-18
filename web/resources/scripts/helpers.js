@@ -82,6 +82,7 @@ function validateSubnetTransition(subnetsMatrixes, subnets) {
 }
 
 function validateTransition(netMatrix, transitionId) {
+    console.log(netMatrix);
     for(let i=0; i < netMatrix[transitionId].length; i++) {
         let place = netMatrix[transitionId][i];
         if(place === -1) {
