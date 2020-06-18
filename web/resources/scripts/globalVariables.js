@@ -11,7 +11,6 @@ let currentPlaceId = 0;
 let selectedElements = [];
 
 let tokens = [];
-let subnetTokens = [];
 
 const place_radius = 30;
 

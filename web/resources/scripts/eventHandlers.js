@@ -71,51 +71,93 @@ function runTransitionEventHandler(mainMatrix, subnetsMatrixes) {
     transition.off();
 
     transition.on('dblclick', function() {
-        const square =  $('.square');
         let subnetPlaces = findIndexesOfDoubles(mainMatrix, 1);
 
-        let transitionId = $(this).attr('id').toString().substr(1,1);
-        if(validateTransition(mainMatrix, transitionId)) {
-            for (let i = 0; i < mainMatrix[transitionId].length; i++) {
-                let placeValue = mainMatrix[transitionId][i];
-                let placeId = "p" + i;
-                let tokenId = i + 'token';
+        let transitionId = $(this).attr('id').toString()
+        if(transitionId.includes("subnet")) { // subnets simulatioj
+            simulateSubnet(mainMatrix, subnetsMatrixes, transitionId);
+        } else {
+            simulateMainNet(mainMatrix, subnetsMatrixes, subnetPlaces, transitionId);
+        }
+    });
+}
 
-                if(subnetPlaces.includes(i)) {
-                    let subnetId = subnetPlaces.indexOf(i);
-                    console.log("SUBNETID: " + subnetId)
-                    placeId = "subnetMain" + subnetId + "p" + i;
-                    let subnetTokenId = "subnet" + i + 'token';
-                    let subnetFirstElementId = "subnet" + subnetId + "p0";
-                    console.log("PlaceId " + placeId);
-                    let x = document.getElementById(placeId).getAttribute('cx');
-                    let y = document.getElementById(placeId).getAttribute('cy');
-                    addTokenToPlace(tokenId, x, y);
+function simulateSubnet(mainMatrix, subnetsMatrixes, transitionId) {
+    let subnetId = transitionId.substr(6,1);
+    transitionId = transitionId.substr(8);
+    for (let i = 0; i < subnetsMatrixes[subnetId][transitionId].length; i++) {
+        let placeValue = subnetsMatrixes[subnetId][transitionId][i];
+        let placeId = "subnet" + subnetId + "p" + i;
+        let tokenId = "subnet" + subnetId + 'token' + i;
 
-                    console.log("SUBNET " + subnetFirstElementId);
-                    x = document.getElementById(subnetFirstElementId).getAttribute('cx');
-                    y = document.getElementById(subnetFirstElementId).getAttribute('cy');
-                    addTokenToPlace(subnetTokenId, x, y);
+        if (placeValue === 1) {
+            if (tokens.indexOf(tokenId) === -1) {
+                let x = document.getElementById(placeId).getAttribute('cx');
+                let y = document.getElementById(placeId).getAttribute('cy');
+                addTokenToPlace(tokenId, x, y);
+                tokens.push(tokenId);
+            }
+        } else if (placeValue === -1) {
+            removeTokenFromPlace(tokenId);
+        }
+    }
+}
 
-                    tokens.push(tokenId);
-                }
+function simulateMainNet(mainMatrix, subnetsMatrixes, subnetPlaces, transitionId) {
+    transitionId = transitionId.substr(1);
 
+    if(validateTransition(mainMatrix, transitionId)) {
+        for (let i = 0; i < mainMatrix[transitionId].length; i++) {
+            let placeValue = mainMatrix[transitionId][i];
+            let placeId = "p" + i;
+            let tokenId = i + 'token';
 
+            if(subnetPlaces.includes(i)) {
                 if (placeValue === 1) {
                     if (tokens.indexOf(tokenId) === -1) {
+                        let subnetId = subnetPlaces.indexOf(i);
+                        placeId = "subnetMain" + subnetId + "p" + i;
+                        let subnetTokenId = "subnet" + subnetId + 'token0';
+                        let subnetFirstElementId = "subnet" + subnetId + "p0";
+
                         let x = document.getElementById(placeId).getAttribute('cx');
                         let y = document.getElementById(placeId).getAttribute('cy');
                         addTokenToPlace(tokenId, x, y);
+
+                        x = document.getElementById(subnetFirstElementId).getAttribute('cx');
+                        y = document.getElementById(subnetFirstElementId).getAttribute('cy');
+                        addTokenToPlace(subnetTokenId, x, y);
+
                         tokens.push(tokenId);
+                    }
+                } else if (placeValue === -1) {
+                    let validateResult = validateSubnetTransition(subnetsMatrixes, subnetPlaces);
+                    if(validateResult.length === 0) {
+                        removeTokenFromPlace(tokenId);
+                    } else {
+                        alert("Najpierw token musi zakonczyc cykl w makrosieci nr: " + validateResult); // podwojne
+                        break;
+                    }
+                }
+            }// main net subnets places
+            else { // main net normal places
+                if (placeValue === 1) {
+                    if(validateSubnetTransition(subnetsMatrixes, subnetPlaces).length === 0) {
+                        if (tokens.indexOf(tokenId) === -1) {
+                            let x = document.getElementById(placeId).getAttribute('cx');
+                            let y = document.getElementById(placeId).getAttribute('cy');
+                            addTokenToPlace(tokenId, x, y);
+                            tokens.push(tokenId);
+                        }
                     }
                 } else if (placeValue === -1) {
                     removeTokenFromPlace(tokenId);
                 }
             }
-        } else {
-            alert('Nie wszystkie miejsca posiadają tokeny!');
         }
-    });
+    } else {
+        alert('Nie wszystkie miejsca posiadają tokeny!');
+    }
 }
 
 function selectEventHandler() {

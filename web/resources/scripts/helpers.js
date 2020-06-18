@@ -69,6 +69,18 @@ function unselectAll() {
     }
 }
 
+function validateSubnetTransition(subnetsMatrixes, subnets) {
+    let notValid = [];
+    for(let i=0; i<subnets.length; i++) {
+        let completedSubnetTokenId = "subnet" + i + 'token' + (subnetsMatrixes[i][0].length-1);
+        if(!tokens.includes(completedSubnetTokenId)) {
+            notValid.push(i);
+        }
+    }
+    console.log("Not finished places: " + notValid);
+    return notValid;
+}
+
 function validateTransition(netMatrix, transitionId) {
     for(let i=0; i < netMatrix[transitionId].length; i++) {
         let place = netMatrix[transitionId][i];
