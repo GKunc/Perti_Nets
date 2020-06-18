@@ -220,7 +220,7 @@ function moveTokenEventHandler(netMatrix) {
     square.on('dblclick', function () {
         let transitionId = $(this).attr('id').toString().substr(1,1);
         console.log("Transition: " + transitionId);
-        if(validateTransition(transitionId)) {
+        if(validateTransition(netMatrix, transitionId)) {
 
             for (let i = 0; i < netMatrix[transitionId].length; i++) {
                 let place = netMatrix[transitionId][i];
